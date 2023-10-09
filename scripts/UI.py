@@ -1,7 +1,7 @@
 import pygame
 import math
 
-class Heart:
+class Button:
     def __init__(self, img, pos, speed):
         '''
         initializing the heart
@@ -48,3 +48,4 @@ class TextUI:
         self.fontsize = fontsize
         current_level = pygame.font.SysFont('Return of Ganon', fontsize).render(f"{self.text}", False, self.color)
         surf.blit(current_level, self.pos)
+
