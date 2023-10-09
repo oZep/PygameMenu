@@ -65,3 +65,23 @@ def buttonSelect():
                 return 'left'
             if event.key == pygame.K_RIGHT:
                 return 'right'
+    
+    
+class MenuPages():
+    def __init__(self):
+        self.sceneIndex = 0
+
+
+    def back(self):
+        self.sceneIndex = max(0, self.sceneIndex-1)
+
+
+    def renderScreen(self):
+        if self.sceneIndex == 0:
+            pass
+        if self.sceneIndex == 1:
+            pass
+
+
+    def getScene():
+        pass
