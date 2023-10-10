@@ -27,6 +27,8 @@ class Game:
         # creating 'camera' 
         self.scroll = [0, 0]
 
+        self.getMenu = 1
+
 
         self.clock = pygame.time.Clock()
         self.escaped = 0
@@ -107,7 +109,11 @@ class Game:
             # fix the jitter
             render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
 
-            self.menu.renderScreen()
+            if self.getMenu:
+                self.menu.renderScreen()
+            else:
+                #render game
+                pass
 
 
             for event in pygame.event.get():
@@ -125,6 +131,8 @@ class Game:
                         self.movement[3] = True
                     if event.key == pygame.K_RETURN:
                         self.menu.back()
+                    if event.key == pygame.K_DELETE:
+                        self.getMenu = 1
 
                 if event.type == pygame.KEYUP: # when key is released
                     if event.key == pygame.K_a: 
