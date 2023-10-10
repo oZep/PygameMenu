@@ -5,7 +5,7 @@ import random
 import pygame
 
 from scripts.utils import load_image, load_images, Animation
-from scripts.UI import TextUI
+from scripts.UI import TextUI, Button
 from scripts.MenuUtils import MenuPages
 
 class Game:
@@ -22,7 +22,7 @@ class Game:
 
         self.display_white = pygame.Surface((320, 240), pygame.SRCALPHA) # render on smaller resolution then scale it up to bigger screen
 
-        self.display_2 = pygame.Surface((320, 240))
+        self.display = pygame.Surface((320, 240))
 
         # creating 'camera' 
         self.scroll = [0, 0]
@@ -64,11 +64,26 @@ class Game:
             'tile_down': load_image('UI/tile_down.png'),
             'tile_left': load_image('UI/tile_left.png'),
             'tile_right': load_image('UI/tile_right.png'),
+            'gear': load_image('button/gear.png'),
+            'start': load_image('button/start.png'),
+            'waiting': load_image('button/waiting.png'),
             'background': load_image('background.png'),
+            'Menu': load_image('background.png'),
         }
 
 
-        self.menu = MenuPages()
+        self.menu = MenuPages(self, 
+            [[
+                Button(self.assets['gear'], (self.screen.get_width()/2, self.screen.get_height() - 30), (40,40)), 
+                Button(self.assets['start'], (self.screen.get_width()/2, self.screen.get_height()/2), (40,90)),
+                Button(self.assets['waiting'], (self.screen.get_width()/2, self.screen.get_height()/2), (40,140)),
+             ],
+             [
+                Button(self.assets['gear'], (self.screen.get_width()/2, self.screen.get_height() - 70), (40,40)), 
+                Button(self.assets['start'], (self.screen.get_width()/2, self.screen.get_height()/3), (40,90)),
+                Button(self.assets['waiting'], (self.screen.get_width()/2, self.screen.get_height()/5), (40,140)),
+             ]
+            ])
 
 
 
@@ -82,7 +97,7 @@ class Game:
 
             self.display_white.fill((255, 255, 255, 0))    # black outlines
             # clear the screen for new image generation in loopd
-            self.display_2.blit(self.assets['background'], (0,0)) # no outline
+            self.display.blit(self.assets['background'], (0,0)) # no outline
 
 
             # move 'camera' to focus on player, make him the center of the screen
@@ -92,6 +107,7 @@ class Game:
             # fix the jitter
             render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
 
+            self.menu.renderScreen()
 
 
             for event in pygame.event.get():
@@ -108,7 +124,7 @@ class Game:
                     if event.key == pygame.K_s:
                         self.movement[3] = True
                     if event.key == pygame.K_RETURN:
-                        self.back()
+                        self.menu.back()
 
                 if event.type == pygame.KEYUP: # when key is released
                     if event.key == pygame.K_a: 
@@ -120,8 +136,8 @@ class Game:
                     if event.key == pygame.K_s:
                         self.movement[3] = False
             
-            self.display_2.blit(self.display_white, (0, 0)) # white 
-            self.screen.blit(pygame.transform.scale(self.display_2, self.screen.get_size()), (0,0)) # render (now scaled) display image on big screen
+            self.display.blit(self.display_white, (0, 0)) # white 
+            self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0,0)) # render (now scaled) display image on big screen
             pygame.display.update()
             self.clock.tick(60) # run at 60 fps, like a sleep
 

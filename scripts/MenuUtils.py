@@ -68,19 +68,26 @@ def buttonSelect():
     
     
 class MenuPages():
-    def __init__(self):
+    def __init__(self, game, screens):
         self.sceneIndex = 0
+        self.game = game
+        self.screens = screens # list [move/forward button, random button, text, etc]
+
 
 
     def back(self):
         self.sceneIndex = max(0, self.sceneIndex-1)
 
+    def update(self):
+        if self.screens[self.sceneIndex][0].isClicked():
+            self.sceneIndex = min(self.sceneIndex+1, len(self.screens))
+
 
     def renderScreen(self):
-        if self.sceneIndex == 0:
-            pass
-        if self.sceneIndex == 1:
-            pass
+        self.game.display.blit(self.game.assets['Menu'], (0,0))
+        for ui in self.screens[self.sceneIndex]:
+            print(ui)
+            ui.render(self.game.display) # render all elements of that scene
 
 
     def getScene():

@@ -2,14 +2,14 @@ import pygame
 import math
 
 class Button:
-    def __init__(self, img, pos, speed):
+    def __init__(self, img, pos, size):
         '''
         initializing the heart
         (image, position=[x,y], speed)
         '''
         self.img = img
         self.pos = pos
-        self.speed = speed
+        self.size = size
         self.posy = pos[1]
         self.angle = 0
         self.count = 0.0
@@ -29,23 +29,30 @@ class Button:
         '''
         surf.blit(self.img, self.pos)
 
+    def rect(self):
+        '''
+        creates a rectangle at the entitiies current postion
+        '''
+        return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
+    
+
 class TextUI:
-    def __init__(self, text, pos=[0,0], color=(0,0,0)):
+    def __init__(self, text, pos=[0,0], fontsize=16, color=(0,0,0)):
         '''
         initializing the level counter
         (current level, position=[x,y], color)
         '''
         self.text = text
         self.pos = pos
+        self.fontsize = fontsize
         self.color = color
     
 
-    def render(self, surf, fontsize):
+    def render(self, surf):
         '''
         renders img on screen
         (surface, font size)
         '''
-        self.fontsize = fontsize
-        current_level = pygame.font.SysFont('Return of Ganon', fontsize).render(f"{self.text}", False, self.color)
+        current_level = pygame.font.SysFont('Return of Ganon', self.fontsize).render(f"{self.text}", False, self.color)
         surf.blit(current_level, self.pos)
 
