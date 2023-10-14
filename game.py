@@ -4,7 +4,7 @@ import math
 import random
 import pygame
 
-from scripts.utils import load_image, load_images, Animation
+from scripts.utils import load_image, Animation
 from scripts.UI import TextUI, Button
 from scripts.MenuUtils import MenuPages
 
@@ -74,16 +74,16 @@ class Game:
         }
 
 
-        self.menu = MenuPages(self, self.display_white, 
+        self.menu = MenuPages(self, 
             [[
-                Button(self.assets['gear'], (self.screen.get_width()/2, self.screen.get_height() - 30), (40,40)), 
-                Button(self.assets['start'], (self.screen.get_width()/2, self.screen.get_height()/2), (40,90)),
-                Button(self.assets['waiting'], (self.screen.get_width()/2, self.screen.get_height()/2), (40,140)),
+                Button(self.assets['gear'], (self.display.get_width() - 50,180), (40,40)), 
+                Button(self.assets['start'], (self.display.get_width() / 3, 180), (40,90)),
+                Button(self.assets['waiting'], (self.display.get_width() / 3 - 4, 50), (40,140)),
              ],
              [
-                Button(self.assets['gear'], (self.screen.get_width()/2, self.screen.get_height() - 70), (40,40)), 
-                Button(self.assets['start'], (self.screen.get_width()/2, self.screen.get_height()/3), (40,90)),
-                Button(self.assets['waiting'], (self.screen.get_width()/2, self.screen.get_height()/5), (40,140)),
+                Button(self.assets['gear'], (0,30), (40,40)), 
+                Button(self.assets['start'], (0,30), (40,90)),
+                Button(self.assets['waiting'], (0,30), (40,140)),
              ]
             ])
 
@@ -109,12 +109,13 @@ class Game:
             # fix the jitter
             render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
 
-            if self.getMenu:
-                self.menu.renderScreen()
-            else:
-                #render game
-                pass
 
+            if self.getMenu:
+                self.menu.renderScreen(self.display_white)
+                #render game
+                # set self.getMenu = 0
+
+            
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: # have to code the window closing

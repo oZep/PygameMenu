@@ -1,5 +1,6 @@
 import pygame
 import sys
+from scripts.UI import Button, TextUI
 
 def buttonSelect():
     for event in pygame.event.get():
@@ -68,10 +69,9 @@ def buttonSelect():
     
     
 class MenuPages():
-    def __init__(self, game, display, screens):
+    def __init__(self, game, screens):
         self.sceneIndex = 0
         self.game = game
-        self.display = display
         self.screens = screens # list [move/forward button, random button, text, etc]
 
 
@@ -84,10 +84,9 @@ class MenuPages():
             self.sceneIndex = min(self.sceneIndex+1, len(self.screens))
 
 
-    def renderScreen(self):
-        self.display.blit(self.game.assets['Menu'], (0,0))
+    def renderScreen(self, display):
         for ui in self.screens[self.sceneIndex]:
-            ui.render(self.display) # render all elements of that scene
+            ui.render(display) # render all elements of that scene
         
-    def getScene():
+    def getScene(self):
         pass
