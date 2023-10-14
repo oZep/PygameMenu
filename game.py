@@ -74,7 +74,7 @@ class Game:
         }
 
 
-        self.menu = MenuPages(self, 
+        self.menu = MenuPages(self, self.display_white, 
             [[
                 Button(self.assets['gear'], (self.screen.get_width()/2, self.screen.get_height() - 30), (40,40)), 
                 Button(self.assets['start'], (self.screen.get_width()/2, self.screen.get_height()/2), (40,90)),
